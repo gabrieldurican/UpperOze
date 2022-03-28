@@ -21,6 +21,15 @@
 		527C4E2327EF9F29002847CB /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527C4E2227EF9F29002847CB /* NetworkManager.swift */; };
 		527C4E2527EFA7BC002847CB /* DeveloperPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527C4E2427EFA7BC002847CB /* DeveloperPage.swift */; };
 		527C4E2827EFA9D4002847CB /* DeveloperAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527C4E2727EFA9D4002847CB /* DeveloperAPI.swift */; };
+		527C4E2B27F04FF3002847CB /* UIView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527C4E2A27F04FF3002847CB /* UIView+Utils.swift */; };
+		527C4E2E27F051AB002847CB /* DeveloperListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527C4E2D27F051AB002847CB /* DeveloperListCell.swift */; };
+		527C4E3027F077B0002847CB /* ImageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527C4E2F27F077B0002847CB /* ImageAPI.swift */; };
+		527C4E3227F07887002847CB /* ImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527C4E3127F07887002847CB /* ImageRepository.swift */; };
+		527C4E3627F07D71002847CB /* UIImageView+Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527C4E3527F07D71002847CB /* UIImageView+Download.swift */; };
+		527C4E3827F0C499002847CB /* DeveloperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527C4E3727F0C499002847CB /* DeveloperViewController.swift */; };
+		527C4E3B27F0CC6A002847CB /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 527C4E3A27F0CC6A002847CB /* Realm */; };
+		527C4E3D27F0CC6A002847CB /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 527C4E3C27F0CC6A002847CB /* RealmSwift */; };
+		527C4E4027F1E78F002847CB /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527C4E3F27F1E78E002847CB /* FavoritesViewController.swift */; };
 		52BF590F27EDAED700972B96 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BF590E27EDAED700972B96 /* SceneDelegate.swift */; };
 		52BF591127EDBF2100972B96 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BF591027EDBF2100972B96 /* EndPoint.swift */; };
 		52BF591327EDC2A900972B96 /* NetworkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BF591227EDC2A900972B96 /* NetworkRouter.swift */; };
@@ -43,6 +52,13 @@
 		527C4E2227EF9F29002847CB /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		527C4E2427EFA7BC002847CB /* DeveloperPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperPage.swift; sourceTree = "<group>"; };
 		527C4E2727EFA9D4002847CB /* DeveloperAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperAPI.swift; sourceTree = "<group>"; };
+		527C4E2A27F04FF3002847CB /* UIView+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Utils.swift"; sourceTree = "<group>"; };
+		527C4E2D27F051AB002847CB /* DeveloperListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperListCell.swift; sourceTree = "<group>"; };
+		527C4E2F27F077B0002847CB /* ImageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAPI.swift; sourceTree = "<group>"; };
+		527C4E3127F07887002847CB /* ImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepository.swift; sourceTree = "<group>"; };
+		527C4E3527F07D71002847CB /* UIImageView+Download.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Download.swift"; sourceTree = "<group>"; };
+		527C4E3727F0C499002847CB /* DeveloperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperViewController.swift; sourceTree = "<group>"; };
+		527C4E3F27F1E78E002847CB /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		52BF590E27EDAED700972B96 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		52BF591027EDBF2100972B96 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		52BF591227EDC2A900972B96 /* NetworkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRouter.swift; sourceTree = "<group>"; };
@@ -53,6 +69,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				527C4E3D27F0CC6A002847CB /* RealmSwift in Frameworks */,
+				527C4E3B27F0CC6A002847CB /* Realm in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +96,8 @@
 		522894B127EB88B600FB148D /* UpperOze */ = {
 			isa = PBXGroup;
 			children = (
+				527C4E2C27F0519C002847CB /* View */,
+				527C4E2927F04FE0002847CB /* Extension */,
 				5261C25B27ECC1CB0079DA60 /* ViewController */,
 				522894CF27EB8F0500FB148D /* Coordinator */,
 				522894CA27EB8C8B00FB148D /* Model */,
@@ -97,6 +117,7 @@
 			children = (
 				522894C827EB8BEE00FB148D /* Repository.swift */,
 				522894CD27EB8E8100FB148D /* DevRepository.swift */,
+				527C4E3127F07887002847CB /* ImageRepository.swift */,
 			);
 			path = Repo;
 			sourceTree = "<group>";
@@ -134,6 +155,8 @@
 			isa = PBXGroup;
 			children = (
 				522894B627EB88B600FB148D /* DeveloperListViewController.swift */,
+				527C4E3727F0C499002847CB /* DeveloperViewController.swift */,
+				527C4E3F27F1E78E002847CB /* FavoritesViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -152,8 +175,26 @@
 			isa = PBXGroup;
 			children = (
 				527C4E2727EFA9D4002847CB /* DeveloperAPI.swift */,
+				527C4E2F27F077B0002847CB /* ImageAPI.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		527C4E2927F04FE0002847CB /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				527C4E2A27F04FF3002847CB /* UIView+Utils.swift */,
+				527C4E3527F07D71002847CB /* UIImageView+Download.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		527C4E2C27F0519C002847CB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				527C4E2D27F051AB002847CB /* DeveloperListCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -172,6 +213,10 @@
 			dependencies = (
 			);
 			name = UpperOze;
+			packageProductDependencies = (
+				527C4E3A27F0CC6A002847CB /* Realm */,
+				527C4E3C27F0CC6A002847CB /* RealmSwift */,
+			);
 			productName = UpperOze;
 			productReference = 522894AF27EB88B600FB148D /* UpperOze.app */;
 			productType = "com.apple.product-type.application";
@@ -200,6 +245,9 @@
 				Base,
 			);
 			mainGroup = 522894A627EB88B600FB148D;
+			packageReferences = (
+				527C4E3927F0CC6A002847CB /* XCRemoteSwiftPackageReference "realm-swift" */,
+			);
 			productRefGroup = 522894B027EB88B600FB148D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -228,19 +276,26 @@
 			files = (
 				527C4E2527EFA7BC002847CB /* DeveloperPage.swift in Sources */,
 				52BF591327EDC2A900972B96 /* NetworkRouter.swift in Sources */,
+				527C4E2B27F04FF3002847CB /* UIView+Utils.swift in Sources */,
 				522894B727EB88B600FB148D /* DeveloperListViewController.swift in Sources */,
+				527C4E3027F077B0002847CB /* ImageAPI.swift in Sources */,
 				527C4E2827EFA9D4002847CB /* DeveloperAPI.swift in Sources */,
+				527C4E4027F1E78F002847CB /* FavoritesViewController.swift in Sources */,
 				52BF590F27EDAED700972B96 /* SceneDelegate.swift in Sources */,
 				527C4E2327EF9F29002847CB /* NetworkManager.swift in Sources */,
 				52BF591127EDBF2100972B96 /* EndPoint.swift in Sources */,
 				522894CE27EB8E8100FB148D /* DevRepository.swift in Sources */,
+				527C4E2E27F051AB002847CB /* DeveloperListCell.swift in Sources */,
 				522894CC27EB8C9D00FB148D /* Developer.swift in Sources */,
+				527C4E3627F07D71002847CB /* UIImageView+Download.swift in Sources */,
 				527C4E1F27EF9861002847CB /* ParameterEncoder.swift in Sources */,
 				522894B327EB88B600FB148D /* AppDelegate.swift in Sources */,
 				527C4E2127EF98B9002847CB /* JSONParameterEncoder.swift in Sources */,
 				522894C927EB8BEE00FB148D /* Repository.swift in Sources */,
 				527C4E1C27EF9832002847CB /* URLParameterEncoder.swift in Sources */,
+				527C4E3227F07887002847CB /* ImageRepository.swift in Sources */,
 				522894D127EB8F0F00FB148D /* Coordinator.swift in Sources */,
+				527C4E3827F0C499002847CB /* DeveloperViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,7 +443,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -416,7 +471,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -452,6 +507,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		527C4E3927F0CC6A002847CB /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		527C4E3A27F0CC6A002847CB /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 527C4E3927F0CC6A002847CB /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		527C4E3C27F0CC6A002847CB /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 527C4E3927F0CC6A002847CB /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 522894A727EB88B600FB148D /* Project object */;
 }

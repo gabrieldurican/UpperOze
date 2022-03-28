@@ -17,7 +17,7 @@ protocol NetworkRouter {
 }
 
 class Router<EndPoint: EndPointType>: NetworkRouter {
-    private var task: URLSessionTask?
+var task: URLSessionTask?
     
     func request(_ route: EndPoint, completion: @escaping NetworkRouterCompletion) {
         let session = URLSession.shared
@@ -29,6 +29,8 @@ class Router<EndPoint: EndPointType>: NetworkRouter {
         } catch {
             completion(nil, nil, error)
         }
+        
+        self.task?.resume()
     }
     
     func cancel() {
@@ -36,7 +38,11 @@ class Router<EndPoint: EndPointType>: NetworkRouter {
     }
     
     fileprivate func buildRequest(from route: EndPoint) throws -> URLRequest {
-        var request = URLRequest(url: route.baseURL.appendingPathComponent(route.path),
+        var url = route.baseURL
+        if route.path != nil {
+            url = route.baseURL.appendingPathComponent(route.path!)
+        }
+        var request = URLRequest(url: url,
                                  cachePolicy: .reloadIgnoringLocalAndRemoteCacheData,
                                  timeoutInterval: 10.0)
         
@@ -44,7 +50,8 @@ class Router<EndPoint: EndPointType>: NetworkRouter {
         do {
             switch route.task {
             case .request:
-                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                return request
             case .requestParameters(let bodyParameters, let urlParameters):
                 try self.configureParameters(bodyParameters: bodyParameters,
                                              urlParameters: urlParameters,

@@ -1,4 +1,5 @@
 import UIKit
+import RealmSwift
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -11,7 +12,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = DeveloperListViewController()
+        let dev = DeveloperListViewController(userRealmConfiguration: Realm.Configuration.defaultConfiguration)
+        let nav = UINavigationController(rootViewController: dev)
+        window.rootViewController = nav
         self.window = window
         window.makeKeyAndVisible()
     }

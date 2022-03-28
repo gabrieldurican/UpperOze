@@ -8,7 +8,7 @@
 import Foundation
 
 enum DeveloperAPI {
-    case developer(name: String)
+    case developer(login: String)
     case developerList(page: Int)
 }
 
@@ -18,10 +18,10 @@ extension DeveloperAPI: EndPointType {
         return url
     }
     
-    var path: String {
+    var path: String? {
         switch self {
-        case .developer(let name):
-            return "/users/\(name)"
+        case .developer(let login):
+            return "/users/\(login)"
         case .developerList(_):
             return "/search/users"
         }

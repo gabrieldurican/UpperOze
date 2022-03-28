@@ -25,7 +25,7 @@ struct URLParameterEncoder: ParameterEncoder {
         
         #warning("GABI check if needed")
         if urlRequest.value(forHTTPHeaderField: "Content-Type") == nil {
-            urlRequest.setValue("charset=utf-8", forHTTPHeaderField: "Content-Type")
+//            urlRequest.setValue("charset=utf-8", forHTTPHeaderField: "Content-Type")
         }
     }
 }
