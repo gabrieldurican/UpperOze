@@ -1,10 +1,3 @@
-//
-//  NetworkManager.swift
-//  UpperOze
-//
-//  Created by gabriel durican on 3/26/22.
-//
-
 import Foundation
 
 struct NetworkManager {
@@ -36,7 +29,7 @@ enum NetworkResponse: String {
     case outdated = "The url you requested is outdated."
     case failed = "Nework request failed."
     case noData = "Response has no data."
-    case unabledToDecode = "Unable to decode the response."
+    case unableToDecode = "Unable to decode the response."
 }
 
 

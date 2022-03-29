@@ -1,14 +1,6 @@
-//
-//  UIView+Utils.swift
-//  UpperOze
-//
-//  Created by gabriel durican on 3/27/22.
-//
-
 import Foundation
 import UIKit
 
-#warning("GABI check if needed")
 extension UIView {
     func fixInView(_ container: UIView!) -> Void{
         self.translatesAutoresizingMaskIntoConstraints = false;

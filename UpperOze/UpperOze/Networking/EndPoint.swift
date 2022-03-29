@@ -1,10 +1,3 @@
-//
-//  EndPoint.swift
-//  UpperOze
-//
-//  Created by gabriel durican on 3/25/22.
-//
-
 import Foundation
 
 protocol EndPointType {

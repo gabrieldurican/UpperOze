@@ -1,10 +1,3 @@
-//
-//  ImageAPI.swift
-//  UpperOze
-//
-//  Created by gabriel durican on 3/27/22.
-//
-
 import Foundation
 
 enum ImageAPI {

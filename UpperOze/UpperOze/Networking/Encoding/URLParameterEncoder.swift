@@ -1,10 +1,3 @@
-//
-//  URLParameterEncoder.swift
-//  UpperOze
-//
-//  Created by gabriel durican on 3/26/22.
-//
-
 import Foundation
 
 struct URLParameterEncoder: ParameterEncoder {
@@ -21,11 +14,6 @@ struct URLParameterEncoder: ParameterEncoder {
                 urlComponents.queryItems?.append(queryItem)
             }
             urlRequest.url = urlComponents.url
-        }
-        
-        #warning("GABI check if needed")
-        if urlRequest.value(forHTTPHeaderField: "Content-Type") == nil {
-//            urlRequest.setValue("charset=utf-8", forHTTPHeaderField: "Content-Type")
         }
     }
 }

@@ -1,30 +1,17 @@
-//
-//  ImageRepository.swift
-//  UpperOze
-//
-//  Created by gabriel durican on 3/27/22.
-//
-
 import Foundation
 import UIKit
-
+import RealmSwift
 
 class ImageRepository: Repository {
-    typealias T = Data
-    typealias D = Data
+    
+    
     typealias E = ImageAPI
     
-    var router: Router<ImageAPI>
-    var manager: NetworkManager
-    let imageCache: NSCache<NSString, LocalImageData>
+    var router = Router<ImageAPI>()
+    var manager = NetworkManager()
+    let imageCache = NSCache<NSString, LocalImageData>()
     
-    required init(router: Router<ImageAPI> = Router(), manager: NetworkManager = NetworkManager()) {
-        self.router = router
-        self.manager = manager
-        self.imageCache = NSCache<NSString, LocalImageData>()
-    }
-    
-    func get(_ urlString: String, completion: @escaping (Data?, String?, String?) -> ()) -> Router<ImageAPI>? {
+    @discardableResult func getData(_ urlString: String, linkedId: String, realm: Realm, completion: @escaping (Data?, String?, String?) -> ()) -> Router<ImageAPI>? {
         guard urlString.count > 0 else {
             return nil
         }
@@ -33,7 +20,6 @@ class ImageRepository: Repository {
             DispatchQueue.main.async {
                 completion(imageFromCache.data, urlString, nil)
             }
-            return nil
         }
         
         
@@ -49,15 +35,27 @@ class ImageRepository: Repository {
             if let response = response as? HTTPURLResponse {
                 let result = self.manager.handleNetworkResponse(response)
                 switch result {
+                    
                 case .success:
                     guard let responseData = data else {
                         completion(nil, urlString, NetworkResponse.noData.rawValue)
+                        
                         return
                     }
                     
+                    //cache the image
                     let dataObject = LocalImageData(data: responseData)
                     self.imageCache.setObject(dataObject, forKey: urlString as NSString)
+                    
+                    DispatchQueue.main.async {
+                        try! realm.write({
+                            let image = ImageData(data: responseData, devLogin: linkedId)
+                            
+                            realm.add(image, update: .all)
+                        })
+                    }
                     completion(responseData, urlString,  nil)
+                    
                 case .failure(let networkFailureError):
                     completion(nil, urlString, networkFailureError)
                 }
@@ -66,12 +64,11 @@ class ImageRepository: Repository {
         
         return router
     }
-    
-    func getListPage(_ page: Int, completion: @escaping (Data?, String?) -> ()) {
+    func get(_ login: String, realm: Realm, completion: @escaping (Data?, String?) -> ()) {
         //unneeded
     }
-    
-    func get(_ login: String, completion: @escaping (Data?, String?) -> ()) {
+        
+    func getAllForPage(_ page: Int, realm: Realm, completion: @escaping (List<Data>?, String?) -> ()) {
         //unneeded
     }
     

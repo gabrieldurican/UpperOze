@@ -1,10 +1,3 @@
-//
-//  NetworkManager.swift
-//  UpperOze
-//
-//  Created by gabriel durican on 3/25/22.
-//
-
 import Foundation
 
 typealias NetworkRouterCompletion = (_ data: Data?, _ response: URLResponse?, _ error: Error?) -> ()

@@ -12,7 +12,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
-        let dev = DeveloperListViewController(userRealmConfiguration: Realm.Configuration.defaultConfiguration)
+        
+//        let dev = DeveloperListViewController(userRealmConfiguration: Realm.Configuration.defaultConfiguration)
+        let dev = DeveloperListViewController()
         let nav = UINavigationController(rootViewController: dev)
         window.rootViewController = nav
         self.window = window

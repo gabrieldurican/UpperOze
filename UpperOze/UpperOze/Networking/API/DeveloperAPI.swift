@@ -1,10 +1,3 @@
-//
-//  DeveloperAPI.swift
-//  UpperOze
-//
-//  Created by gabriel durican on 3/26/22.
-//
-
 import Foundation
 
 enum DeveloperAPI {
@@ -20,8 +13,8 @@ extension DeveloperAPI: EndPointType {
     
     var path: String? {
         switch self {
-        case .developer(let login):
-            return "/users/\(login)"
+        case .developer(let id):
+            return "/users/\(id)"
         case .developerList(_):
             return "/search/users"
         }

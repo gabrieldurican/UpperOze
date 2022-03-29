@@ -1,10 +1,3 @@
-//
-//  ParameterEncoder.swift
-//  UpperOze
-//
-//  Created by gabriel durican on 3/26/22.
-//
-
 import Foundation
 
 public typealias Parameters = [String : Any]

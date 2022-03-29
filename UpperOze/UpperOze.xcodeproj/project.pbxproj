@@ -14,7 +14,6 @@
 		522894C927EB8BEE00FB148D /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522894C827EB8BEE00FB148D /* Repository.swift */; };
 		522894CC27EB8C9D00FB148D /* Developer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522894CB27EB8C9D00FB148D /* Developer.swift */; };
 		522894CE27EB8E8100FB148D /* DevRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522894CD27EB8E8100FB148D /* DevRepository.swift */; };
-		522894D127EB8F0F00FB148D /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522894D027EB8F0F00FB148D /* Coordinator.swift */; };
 		527C4E1C27EF9832002847CB /* URLParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527C4E1B27EF9832002847CB /* URLParameterEncoder.swift */; };
 		527C4E1F27EF9861002847CB /* ParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527C4E1E27EF9861002847CB /* ParameterEncoder.swift */; };
 		527C4E2127EF98B9002847CB /* JSONParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527C4E2027EF98B9002847CB /* JSONParameterEncoder.swift */; };
@@ -25,11 +24,12 @@
 		527C4E2E27F051AB002847CB /* DeveloperListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527C4E2D27F051AB002847CB /* DeveloperListCell.swift */; };
 		527C4E3027F077B0002847CB /* ImageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527C4E2F27F077B0002847CB /* ImageAPI.swift */; };
 		527C4E3227F07887002847CB /* ImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527C4E3127F07887002847CB /* ImageRepository.swift */; };
-		527C4E3627F07D71002847CB /* UIImageView+Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527C4E3527F07D71002847CB /* UIImageView+Download.swift */; };
 		527C4E3827F0C499002847CB /* DeveloperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527C4E3727F0C499002847CB /* DeveloperViewController.swift */; };
 		527C4E3B27F0CC6A002847CB /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 527C4E3A27F0CC6A002847CB /* Realm */; };
 		527C4E3D27F0CC6A002847CB /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 527C4E3C27F0CC6A002847CB /* RealmSwift */; };
 		527C4E4027F1E78F002847CB /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527C4E3F27F1E78E002847CB /* FavoritesViewController.swift */; };
+		527C4E4327F326BC002847CB /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527C4E4227F326BC002847CB /* BaseViewController.swift */; };
+		527C4E4527F381B7002847CB /* ImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527C4E4427F381B7002847CB /* ImageData.swift */; };
 		52BF590F27EDAED700972B96 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BF590E27EDAED700972B96 /* SceneDelegate.swift */; };
 		52BF591127EDBF2100972B96 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BF591027EDBF2100972B96 /* EndPoint.swift */; };
 		52BF591327EDC2A900972B96 /* NetworkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BF591227EDC2A900972B96 /* NetworkRouter.swift */; };
@@ -45,7 +45,6 @@
 		522894C827EB8BEE00FB148D /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		522894CB27EB8C9D00FB148D /* Developer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Developer.swift; sourceTree = "<group>"; };
 		522894CD27EB8E8100FB148D /* DevRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevRepository.swift; sourceTree = "<group>"; };
-		522894D027EB8F0F00FB148D /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		527C4E1B27EF9832002847CB /* URLParameterEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLParameterEncoder.swift; sourceTree = "<group>"; };
 		527C4E1E27EF9861002847CB /* ParameterEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterEncoder.swift; sourceTree = "<group>"; };
 		527C4E2027EF98B9002847CB /* JSONParameterEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParameterEncoder.swift; sourceTree = "<group>"; };
@@ -56,9 +55,10 @@
 		527C4E2D27F051AB002847CB /* DeveloperListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperListCell.swift; sourceTree = "<group>"; };
 		527C4E2F27F077B0002847CB /* ImageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAPI.swift; sourceTree = "<group>"; };
 		527C4E3127F07887002847CB /* ImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepository.swift; sourceTree = "<group>"; };
-		527C4E3527F07D71002847CB /* UIImageView+Download.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Download.swift"; sourceTree = "<group>"; };
 		527C4E3727F0C499002847CB /* DeveloperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperViewController.swift; sourceTree = "<group>"; };
 		527C4E3F27F1E78E002847CB /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
+		527C4E4227F326BC002847CB /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		527C4E4427F381B7002847CB /* ImageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageData.swift; sourceTree = "<group>"; };
 		52BF590E27EDAED700972B96 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		52BF591027EDBF2100972B96 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		52BF591227EDC2A900972B96 /* NetworkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRouter.swift; sourceTree = "<group>"; };
@@ -99,7 +99,6 @@
 				527C4E2C27F0519C002847CB /* View */,
 				527C4E2927F04FE0002847CB /* Extension */,
 				5261C25B27ECC1CB0079DA60 /* ViewController */,
-				522894CF27EB8F0500FB148D /* Coordinator */,
 				522894CA27EB8C8B00FB148D /* Model */,
 				522894C727EB8A4A00FB148D /* Networking */,
 				522894C627EB892900FB148D /* Repo */,
@@ -139,16 +138,9 @@
 			children = (
 				522894CB27EB8C9D00FB148D /* Developer.swift */,
 				527C4E2427EFA7BC002847CB /* DeveloperPage.swift */,
+				527C4E4427F381B7002847CB /* ImageData.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		522894CF27EB8F0500FB148D /* Coordinator */ = {
-			isa = PBXGroup;
-			children = (
-				522894D027EB8F0F00FB148D /* Coordinator.swift */,
-			);
-			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		5261C25B27ECC1CB0079DA60 /* ViewController */ = {
@@ -157,6 +149,7 @@
 				522894B627EB88B600FB148D /* DeveloperListViewController.swift */,
 				527C4E3727F0C499002847CB /* DeveloperViewController.swift */,
 				527C4E3F27F1E78E002847CB /* FavoritesViewController.swift */,
+				527C4E4227F326BC002847CB /* BaseViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -184,7 +177,6 @@
 			isa = PBXGroup;
 			children = (
 				527C4E2A27F04FF3002847CB /* UIView+Utils.swift */,
-				527C4E3527F07D71002847CB /* UIImageView+Download.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -277,6 +269,7 @@
 				527C4E2527EFA7BC002847CB /* DeveloperPage.swift in Sources */,
 				52BF591327EDC2A900972B96 /* NetworkRouter.swift in Sources */,
 				527C4E2B27F04FF3002847CB /* UIView+Utils.swift in Sources */,
+				527C4E4327F326BC002847CB /* BaseViewController.swift in Sources */,
 				522894B727EB88B600FB148D /* DeveloperListViewController.swift in Sources */,
 				527C4E3027F077B0002847CB /* ImageAPI.swift in Sources */,
 				527C4E2827EFA9D4002847CB /* DeveloperAPI.swift in Sources */,
@@ -287,15 +280,14 @@
 				522894CE27EB8E8100FB148D /* DevRepository.swift in Sources */,
 				527C4E2E27F051AB002847CB /* DeveloperListCell.swift in Sources */,
 				522894CC27EB8C9D00FB148D /* Developer.swift in Sources */,
-				527C4E3627F07D71002847CB /* UIImageView+Download.swift in Sources */,
 				527C4E1F27EF9861002847CB /* ParameterEncoder.swift in Sources */,
 				522894B327EB88B600FB148D /* AppDelegate.swift in Sources */,
 				527C4E2127EF98B9002847CB /* JSONParameterEncoder.swift in Sources */,
 				522894C927EB8BEE00FB148D /* Repository.swift in Sources */,
 				527C4E1C27EF9832002847CB /* URLParameterEncoder.swift in Sources */,
 				527C4E3227F07887002847CB /* ImageRepository.swift in Sources */,
-				522894D127EB8F0F00FB148D /* Coordinator.swift in Sources */,
 				527C4E3827F0C499002847CB /* DeveloperViewController.swift in Sources */,
+				527C4E4527F381B7002847CB /* ImageData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,8 +433,9 @@
 				INFOPLIST_FILE = UpperOze/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -453,7 +446,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -469,8 +462,9 @@
 				INFOPLIST_FILE = UpperOze/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -481,7 +475,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

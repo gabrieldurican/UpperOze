@@ -1,10 +1,3 @@
-//
-//  DeveloperListCell.swift
-//  UpperOze
-//
-//  Created by gabriel durican on 3/27/22.
-//
-
 import Foundation
 import UIKit
 import RealmSwift
@@ -22,6 +15,7 @@ class DeveloperListCell: UITableViewCell {
     var router: Router<ImageAPI>?
     var avatarUrl: String?
     var delegate: DeveloperListCellDelegate?
+    var loginLabel: UILabel = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: DeveloperListCell.kCellId)
@@ -34,6 +28,11 @@ class DeveloperListCell: UITableViewCell {
         configureBackground()
         configureImageView()
         configureFavoriteButton()
+        configureLabels()
+        contentView.addSubview(loginLabel)
+        adjustLabelConstraints()
+        selectionStyle = .none
+        
     }
     
     required init?(coder: NSCoder) {
@@ -41,13 +40,18 @@ class DeveloperListCell: UITableViewCell {
     }
     
     func configureBackground() {
-//        let view = UIView()
-//        view.backgroundColor = kLightOrange
-//        self.selectedBackgroundView = view
+        let view = UIView()
+        view.backgroundColor = .clear
+        self.selectedBackgroundView = view
+    }
+    
+    func configureLabels() {
+        loginLabel.textColor = UIColor.black
+        loginLabel.font = UIFont.boldSystemFont(ofSize: 16)
     }
     
     func configureImageView() {
-        self.contentView.addSubview(devImageView)
+        contentView.addSubview(devImageView)
         devImageView.layer.cornerRadius = 50.0
         devImageView.clipsToBounds = true
         devImageView.image = UIImage(named: "placeholder")
@@ -60,7 +64,8 @@ class DeveloperListCell: UITableViewCell {
     
     func configureFavoriteButton() {
         contentView.addSubview(favoriteButton)
-        favoriteButton.setImage(UIImage(named: "heart"), for: .normal)
+        favoriteButton.setImage(UIImage(named: "starDefault"), for: .normal)
+        favoriteButton.setImage(UIImage(named: "starSelected"), for: .highlighted)
         favoriteButton.addTarget(self, action: #selector(tappedFavorite), for: .touchUpInside)
         adjustFavoriteButtonConstraints()
     }
@@ -93,25 +98,21 @@ class DeveloperListCell: UITableViewCell {
         favoriteButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
     }
     
-    func configure(title: String?, score: Double?, isFavorite: Bool, imageURL: String, repo: ImageRepository?, realm: Realm, index: Int) {
-        #warning("GABI check https://stackoverflow.com/questions/63075418/how-to-use-ios-14-cell-content-configurations-in-general")
-//        var contentConfig = self.defaultContentConfiguration()
-//        contentConfig.text = title?.capitalized
-//        contentConfig.textProperties.font = UIFont.systemFont(ofSize: 20)
-//        contentConfig.secondaryText = "\(score ?? 0)"
-//        contentConfig.textProperties.color = UIColor.blue
-//        contentConfig.secondaryTextProperties.color = .blue
-//        contentConfig.cont
+    func adjustLabelConstraints() {
+        loginLabel.translatesAutoresizingMaskIntoConstraints = false
+        loginLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        loginLabel.leftAnchor.constraint(equalTo: devImageView.rightAnchor, constant: 15).isActive = true
+        loginLabel.rightAnchor.constraint(greaterThanOrEqualTo: favoriteButton.leftAnchor, constant: 10).isActive = true
+    }
+    
+    func configure(developer: Developer, repo: ImageRepository?, realm: Realm, showFavorite: Bool = true) {
+        favoriteButton.isHidden = !showFavorite
+        favoriteButton.isHighlighted = developer.isFavorite == true
+        loginLabel.text = developer.login?.capitalized
+       
+        self.avatarUrl = developer.avatarUrl
         
-//        favoriteButton.isHighlighted = (isFavorite == true)
-        favoriteButton.backgroundColor = isFavorite == true ? .blue : .red
-        
-        
-        self.avatarUrl = imageURL
-        
-//        self.contentConfiguration = contentConfig
-        
-        router = repo?.get(imageURL, completion: { [weak self] imageData, urlUsed, error in
+        router = repo?.getData(developer.avatarUrl ?? "", linkedId: developer.login ?? "", realm: realm, completion: { [weak self] imageData, urlUsed, error in
             guard let self = self else {
                 return
             }
@@ -122,19 +123,16 @@ class DeveloperListCell: UITableViewCell {
             }
             
             DispatchQueue.main.async {
-                if error != nil && imageData == nil {
-                    let realmImage = realm.object(ofType: ImageData.self, forPrimaryKey: index)
-                    let image = UIImage(data: realmImage?.data ?? Data())
-                    self.setNewImage(image: image)
+                var data: Data?
+                if imageData == nil && error != nil {
+                    let realmImage = realm.object(ofType: ImageData.self, forPrimaryKey: developer.login)
+                    data = realmImage?.data
                 } else {
-                    try! realm.write({
-                        let img = ImageData(data: imageData, index: index, devName: title)
-
-                        realm.add(img, update: .all)
-                        self.setNewImage(image: UIImage(data: imageData ?? Data()))
-                    })
+                    data = imageData
                 }
+                self.setNewImage(image: UIImage(data: data ?? Data()))
             }
+            
         })
         
         

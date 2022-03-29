@@ -1,24 +1,12 @@
-//
-//  Repository.swift
-//  UpperOze
-//
-//  Created by gabriel durican on 3/23/22.
-//
-
 import Foundation
+import RealmSwift
 
 protocol Repository {
-    associatedtype T
-    associatedtype D
+    associatedtype D: RealmCollectionValue
     associatedtype E: EndPointType
     
-    var router: Router<E> { get set }
-    var manager: NetworkManager { get set }
-    
-    func get(_ login: String, completion: @escaping (T?, String?) -> ())
-    func get(_ urlString: String, completion: @escaping (T?, String?, String?) -> ()) -> Router<E>?
-    func getListPage(_ page: Int, completion: @escaping (D?, String?) -> ())
-
-    init(router: Router<E>, manager: NetworkManager)
+    func get(_ login: String, realm: Realm, completion: @escaping (D?, String?) -> ())
+    func getData(_ urlString: String, linkedId: String, realm: Realm, completion: @escaping (Data?, String?, String?) -> ()) -> Router<E>?
+    func getAllForPage(_ page: Int, realm: Realm, completion: @escaping (List<D>?, String?) -> ())
 }
 

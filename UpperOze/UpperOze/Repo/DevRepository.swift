@@ -1,33 +1,21 @@
-//
-//  DevRepository.swift
-//  UpperOze
-//
-//  Created by gabriel durican on 3/23/22.
-//
-
 import Foundation
+import RealmSwift
 
 class DevRepository: Repository {
-    typealias T = Developer
-    typealias D = DeveloperPage
     typealias E = DeveloperAPI
+    typealias D = Developer
     
-    var router: Router<DeveloperAPI>
-    var manager: NetworkManager
-    
-    required init(router: Router<DeveloperAPI> = Router(), manager: NetworkManager = NetworkManager()) {
-        self.router = router
-        self.manager = manager
-    }
-    
-    func get(_ login: String, completion: @escaping (Developer?, String?) -> ()) {
+    var router = Router<DeveloperAPI>()
+    var manager = NetworkManager()
+       
+    func get(_ login: String, realm: Realm, completion: @escaping (Developer?, String?) -> ()) {
         router.request(.developer(login: login)) { [weak self] data, response, error in
             guard let self = self else {
                 return
             }
             
             if error != nil {
-                completion(nil, "Please check your internet connection.")
+                completion(nil, error?.localizedDescription)
             }
             
             if let response = response as? HTTPURLResponse {
@@ -40,10 +28,57 @@ class DevRepository: Repository {
                     }
                     
                     do {
-                        let apiResponse = try JSONDecoder.decode(DeveloperFull.self, from: responseData)
-                        completion(apiResponse, nil)
+                        let devFull = try JSONDecoder().decode(Developer.self, from: responseData)
+                        
+                        DispatchQueue.main.async {
+                            try! realm.write({
+                                realm.add(devFull, update: .all)
+                            })
+                            completion(devFull, nil)
+                        }
                     } catch {
-                        completion(nil, NetworkResponse.unabledToDecode.rawValue)
+                        completion(nil, NetworkResponse.unableToDecode.rawValue)
+                    }
+                case .failure(let networkFailureError):
+                    completion(nil, networkFailureError)
+                }
+            }
+        }
+    }
+
+    
+    func getAllForPage(_ page: Int, realm: Realm, completion: @escaping (List<Developer>?, String?) -> ()) {
+        router.request(.developerList(page: page)) { [weak self] data, response, error in
+            guard let self = self else {
+                return
+            }
+            
+            if error != nil {
+                completion(nil, error?.localizedDescription)
+            }
+            
+            if let response = response as? HTTPURLResponse {
+                let result = self.manager.handleNetworkResponse(response)
+                switch result {
+                case .success:
+                    guard let responseData = data else {
+                        completion(nil, NetworkResponse.noData.rawValue)
+                        return
+                    }
+                    
+                    do {
+                        let devPage = try JSONDecoder().decode(DeveloperPage.self, from: responseData)
+                        DispatchQueue.main.async {
+                            try! realm.write({
+                                devPage.developers.forEach {
+                                    realm.add($0, update: .all)
+                                }
+                            })
+                            completion(devPage.developers, nil)
+                        }
+                        
+                    } catch {
+                        completion(nil, NetworkResponse.unableToDecode.rawValue)
                     }
                 case .failure(let networkFailureError):
                     completion(nil, networkFailureError)
@@ -52,39 +87,7 @@ class DevRepository: Repository {
         }
     }
     
-    func getListPage(_ page: Int, completion: @escaping (DeveloperPage?, String?) -> ()) {
-        router.request(.developerList(page: page)) { [weak self] data, response, error in
-            guard let self = self else {
-                return
-            }
-            
-            if error != nil {
-                completion(nil, "Please check your internet connection.")
-            }
-            
-            if let response = response as? HTTPURLResponse {
-                let result = self.manager.handleNetworkResponse(response)
-                switch result {
-                case .success:
-                    guard let responseData = data else {
-                        completion(nil, NetworkResponse.noData.rawValue)
-                        return
-                    }
-                    
-                    do {
-                        let apiResponse = try JSONDecoder().decode(DeveloperPage.self, from: responseData)
-                        apiResponse.page = page
-                        completion(apiResponse, nil)
-                    } catch {
-                        completion(nil, NetworkResponse.unabledToDecode.rawValue)
-                    }
-                case .failure(let networkFailureError):
-                    completion(nil, networkFailureError)
-                }
-            }
-        }
-    }
-    func get(_ urlString: String, completion: @escaping (Developer?, String?, String?) -> ()) -> Router<DeveloperAPI>? {
+    func getData(_ urlString: String, linkedId: String, realm: Realm, completion: @escaping (Data?, String?, String?) -> ()) -> Router<DeveloperAPI>? {
         //unneeded
         return nil
     }
