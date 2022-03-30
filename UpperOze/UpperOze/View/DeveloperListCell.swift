@@ -15,24 +15,19 @@ class DeveloperListCell: UITableViewCell {
     var router: Router<ImageAPI>?
     var avatarUrl: String?
     var delegate: DeveloperListCellDelegate?
-    var loginLabel: UILabel = UILabel()
+    var loginLabel = UILabel()
+    var scoreLabel = UILabel()
+    var labelStack = UIStackView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: DeveloperListCell.kCellId)
-        backgroundColor = UIColor.white
-
-        separatorInset = UIEdgeInsets.zero
-        indentationWidth = 11
-        indentationLevel = 10
         
+        configureTableAppearance()
         configureBackground()
         configureImageView()
         configureFavoriteButton()
         configureLabels()
-        contentView.addSubview(loginLabel)
         adjustLabelConstraints()
-        selectionStyle = .none
-        
     }
     
     required init?(coder: NSCoder) {
@@ -45,9 +40,24 @@ class DeveloperListCell: UITableViewCell {
         self.selectedBackgroundView = view
     }
     
+    func configureTableAppearance() {
+        backgroundColor = UIColor.white
+        separatorInset = UIEdgeInsets.zero
+        indentationWidth = 11
+        indentationLevel = 10
+        selectionStyle = .none
+    }
+    
     func configureLabels() {
+        contentView.addSubview(labelStack)
+        contentView.addSubview(loginLabel)
+        contentView.addSubview(scoreLabel)
+        labelStack.axis = .vertical
+        labelStack.alignment = .center
         loginLabel.textColor = UIColor.black
         loginLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        scoreLabel.textColor = UIColor.black
+        scoreLabel.font = UIFont.systemFont(ofSize: 12)
     }
     
     func configureImageView() {
@@ -99,16 +109,35 @@ class DeveloperListCell: UITableViewCell {
     }
     
     func adjustLabelConstraints() {
+        labelStack.translatesAutoresizingMaskIntoConstraints = false
+        labelStack.leftAnchor.constraint(equalTo: devImageView.rightAnchor, constant: 15).isActive = true
+        labelStack.rightAnchor.constraint(greaterThanOrEqualTo: favoriteButton.leftAnchor, constant: -10).isActive = true
+        labelStack.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        labelStack.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        
         loginLabel.translatesAutoresizingMaskIntoConstraints = false
-        loginLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        loginLabel.leftAnchor.constraint(equalTo: devImageView.rightAnchor, constant: 15).isActive = true
-        loginLabel.rightAnchor.constraint(greaterThanOrEqualTo: favoriteButton.leftAnchor, constant: 10).isActive = true
+        loginLabel.topAnchor.constraint(equalTo: labelStack.topAnchor, constant: 0).isActive = true
+        loginLabel.bottomAnchor.constraint(equalTo: scoreLabel.topAnchor, constant: 10).isActive = true
+        loginLabel.leftAnchor.constraint(equalTo: labelStack.leftAnchor, constant: 0).isActive = true
+        loginLabel.rightAnchor.constraint(greaterThanOrEqualTo: labelStack.rightAnchor, constant: 0).isActive = true
+        
+        scoreLabel.translatesAutoresizingMaskIntoConstraints = false
+        scoreLabel.bottomAnchor.constraint(equalTo: labelStack.bottomAnchor, constant: 0).isActive = true
+        scoreLabel.leftAnchor.constraint(equalTo: labelStack.leftAnchor, constant: 0).isActive = true
+        scoreLabel.rightAnchor.constraint(greaterThanOrEqualTo: labelStack.rightAnchor, constant: 0).isActive = true
     }
     
     func configure(developer: Developer, repo: ImageRepository?, realm: Realm, showFavorite: Bool = true) {
         favoriteButton.isHidden = !showFavorite
         favoriteButton.isHighlighted = developer.isFavorite == true
         loginLabel.text = developer.login?.capitalized
+        
+        if let score = developer.score {
+            scoreLabel.text = String(format: "Score %.1f", score)
+            scoreLabel.isHidden = false
+        } else {
+            scoreLabel.isHidden = true
+        }
        
         self.avatarUrl = developer.avatarUrl
         
@@ -132,10 +161,7 @@ class DeveloperListCell: UITableViewCell {
                 }
                 self.setNewImage(image: UIImage(data: data ?? Data()))
             }
-            
         })
-        
-        
     }
     
     override func prepareForReuse() {

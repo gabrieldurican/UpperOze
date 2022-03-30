@@ -4,6 +4,7 @@ import RealmSwift
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var coordinator: MainCoordinator?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -14,8 +15,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         
 //        let dev = DeveloperListViewController(userRealmConfiguration: Realm.Configuration.defaultConfiguration)
-        let dev = DeveloperListViewController()
-        let nav = UINavigationController(rootViewController: dev)
+//        let dev = DeveloperListViewController()
+//        let nav = UINavigationController(rootViewController: dev)
+        let nav = UINavigationController()
+        coordinator = MainCoordinator(navigationController: nav)
+        coordinator?.start()
+        
         window.rootViewController = nav
         self.window = window
         window.makeKeyAndVisible()

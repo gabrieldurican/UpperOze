@@ -8,6 +8,7 @@ class BaseViewController: UIViewController {
     var notificationToken: NotificationToken?
     var devRepo = DevRepository()
     var imageRepo = ImageRepository()
+    weak var coordinator: MainCoordinator?
         
     override func viewDidLoad() {
         super.viewDidLoad()
