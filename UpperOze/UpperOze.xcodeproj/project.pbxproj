@@ -32,6 +32,7 @@
 		527C4E4527F381B7002847CB /* ImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527C4E4427F381B7002847CB /* ImageData.swift */; };
 		52B551C227F47A8E001B6DA4 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B551C127F47A8E001B6DA4 /* Coordinator.swift */; };
 		52B551C627F47CBD001B6DA4 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B551C527F47CBD001B6DA4 /* MainCoordinator.swift */; };
+		52B551C827F59B94001B6DA4 /* AdditionalDeveloperInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B551C727F59B94001B6DA4 /* AdditionalDeveloperInfoView.swift */; };
 		52BF590F27EDAED700972B96 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BF590E27EDAED700972B96 /* SceneDelegate.swift */; };
 		52BF591127EDBF2100972B96 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BF591027EDBF2100972B96 /* EndPoint.swift */; };
 		52BF591327EDC2A900972B96 /* NetworkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BF591227EDC2A900972B96 /* NetworkRouter.swift */; };
@@ -63,6 +64,7 @@
 		527C4E4427F381B7002847CB /* ImageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageData.swift; sourceTree = "<group>"; };
 		52B551C127F47A8E001B6DA4 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		52B551C527F47CBD001B6DA4 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		52B551C727F59B94001B6DA4 /* AdditionalDeveloperInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionalDeveloperInfoView.swift; sourceTree = "<group>"; };
 		52BF590E27EDAED700972B96 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		52BF591027EDBF2100972B96 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		52BF591227EDC2A900972B96 /* NetworkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRouter.swift; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				527C4E2D27F051AB002847CB /* DeveloperListCell.swift */,
+				52B551C727F59B94001B6DA4 /* AdditionalDeveloperInfoView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 				527C4E2B27F04FF3002847CB /* UIView+Utils.swift in Sources */,
 				527C4E4327F326BC002847CB /* BaseViewController.swift in Sources */,
 				522894B727EB88B600FB148D /* DeveloperListViewController.swift in Sources */,
+				52B551C827F59B94001B6DA4 /* AdditionalDeveloperInfoView.swift in Sources */,
 				527C4E3027F077B0002847CB /* ImageAPI.swift in Sources */,
 				527C4E2827EFA9D4002847CB /* DeveloperAPI.swift in Sources */,
 				527C4E4027F1E78F002847CB /* FavoritesViewController.swift in Sources */,

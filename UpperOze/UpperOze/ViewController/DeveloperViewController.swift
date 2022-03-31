@@ -14,20 +14,9 @@ class DeveloperViewController: BaseViewController {
     var imageView = UIImageView()
     var nameLabel = UILabel()
     var locationLabel = UILabel()
-    var infoLabel = UILabel()
-    var companyLabel = UILabel()
-    var companyValueLabel = UILabel()
-    var blogLabel = UILabel()
-    var blogValueLabel = UILabel()
-    var emailLabel = UILabel()
-    var emailValueLabel = UILabel()
-    var bioLabel = UILabel()
-    var bioValueLabel = UILabel()
-    var hireableLabel = UILabel()
-    var additionalInfoLabel = UILabel()
     var nameLocationStack = UIStackView()
-    var additionalInfoStack = UIStackView()
-    var hireCircleView = UIView()
+    var additionalInfoView: AdditionalDeveloperInfoView?
+    
     
     lazy var indicatorView: UIActivityIndicatorView = {
         let iv = UIActivityIndicatorView(style: .large)
@@ -59,6 +48,7 @@ class DeveloperViewController: BaseViewController {
     
     func startObservingRealm() {
         developer = realm?.object(ofType: Developer.self, forPrimaryKey: devLogin)
+
         notificationToken = developer?.observe { [weak self] change in
             guard let self = self else {
                 return
@@ -70,7 +60,7 @@ class DeveloperViewController: BaseViewController {
             case .error(let error):
                 self.showErrorAlert(error: error.localizedDescription)
             case .deleted:
-                self.showErrorAlert(error: "object deleted")
+                self.showErrorAlert(error: " object deleted")
             }
         }
     }
@@ -137,7 +127,6 @@ class DeveloperViewController: BaseViewController {
         
         addNeededSubviews()
         configureConstraints()
-        configureViewConditionals()
         configureViewsProperties()
     }
     
@@ -147,24 +136,12 @@ class DeveloperViewController: BaseViewController {
         //directly inside details view
         detailsView.addSubview(nameLocationStack)
         detailsView.addSubview(imageView)
-        detailsView.addSubview(infoLabel)
-        detailsView.addSubview(additionalInfoStack)
+        additionalInfoView = AdditionalDeveloperInfoView(developer: self.developer)
+        detailsView.addSubview(additionalInfoView ?? UIView())
         
         //name and location stackView
         nameLocationStack.addSubview(nameLabel)
         nameLocationStack.addSubview(locationLabel)
-
-        //additional information stackView
-        additionalInfoStack.addSubview(hireableLabel)
-        additionalInfoStack.addSubview(hireCircleView)
-        additionalInfoStack.addSubview(companyLabel)
-        additionalInfoStack.addSubview(companyValueLabel)
-        additionalInfoStack.addSubview(blogLabel)
-        additionalInfoStack.addSubview(blogValueLabel)
-        additionalInfoStack.addSubview(emailLabel)
-        additionalInfoStack.addSubview(emailValueLabel)
-        additionalInfoStack.addSubview(bioLabel)
-        additionalInfoStack.addSubview(bioValueLabel)
 
         //loading indicator
         view.addSubview(indicatorView)
@@ -173,9 +150,7 @@ class DeveloperViewController: BaseViewController {
     func configureViewsProperties() {
         nameLocationStack.axis = .vertical
         nameLocationStack.alignment = .center
-        
-        additionalInfoStack.axis = .vertical
-        additionalInfoStack.alignment = .center
+        nameLocationStack.spacing = 0.0
         
         nameLabel.font = UIFont.boldSystemFont(ofSize: 20)
         nameLabel.textAlignment = .center
@@ -184,19 +159,6 @@ class DeveloperViewController: BaseViewController {
         locationLabel.textColor = .orange
         locationLabel.textAlignment = .center
         locationLabel.adjustsFontSizeToFitWidth = true
-        
-        companyLabel.font = UIFont.italicSystemFont(ofSize: 14)
-        companyValueLabel.font = UIFont.systemFont(ofSize: 14)
-        blogLabel.font = UIFont.italicSystemFont(ofSize: 14)
-        companyValueLabel.font = UIFont.systemFont(ofSize: 14)
-        emailLabel.font = UIFont.italicSystemFont(ofSize: 14)
-        companyValueLabel.font = UIFont.systemFont(ofSize: 14)
-        bioLabel.font = UIFont.italicSystemFont(ofSize: 14)
-        companyValueLabel.font = UIFont.systemFont(ofSize: 14)
-        hireableLabel.font = UIFont.italicSystemFont(ofSize: 14)
-        
-        hireCircleView.layer.cornerRadius = kCircleRadius
-        hireCircleView.clipsToBounds = true
     }
     
     
@@ -217,44 +179,17 @@ class DeveloperViewController: BaseViewController {
         //image view
         adjustImageViewConstraints()
         
-        //label with text 'additional information'
-        stickViewLeftRightToSuperview(view: infoLabel)
-//
-//        //all the available extra information for the developer company/bio etc.
-//        adjustAdditionalInfoStackConstraints()
-//
-//        //center the loading indicator
+        adjustAdditionalInfoViewConstraints()
+
+        //center the loading indicator
         adjustIndicatorConstraints()
     }
     
-    func adjustAdditionalInfoStackConstraints() {
-        adjustAdditionalInfoFirstLastConstraints()
-
-        stickViewLeftRightToSuperview(view: additionalInfoStack, left: kDefaultPadding, right: kDefaultPadding)
-        additionalInfoStack.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: kDefaultPadding).isActive = true
-        additionalInfoStack.bottomAnchor.constraint(greaterThanOrEqualTo: detailsView.bottomAnchor, constant: kDefaultPadding).isActive = true
-        
-        //hireable circle view
-        hireCircleView.translatesAutoresizingMaskIntoConstraints = false
-        hireCircleView.heightAnchor.constraint(equalToConstant: 2 * kCircleRadius).isActive = true
-        hireCircleView.widthAnchor.constraint(equalToConstant: 2 * kCircleRadius).isActive = true
-        hireCircleView.leftAnchor.constraint(equalTo: detailsView.leftAnchor, constant: kDefaultPadding).isActive = true
-        hireCircleView.rightAnchor.constraint(equalTo: hireableLabel.leftAnchor, constant: kDefaultPadding).isActive = true
-        
-        //extra info labels
-        adjustAdditionalInfoLabelConstraints(label: infoLabel, below: imageView)
-        //company
-        adjustAdditionalInfoLabelConstraints(label: companyLabel, below: hireableLabel)
-        adjustAdditionalInfoLabelConstraints(label: companyValueLabel, below: companyLabel)
-        //blog
-        adjustAdditionalInfoLabelConstraints(label: blogLabel, below: companyValueLabel)
-        adjustAdditionalInfoLabelConstraints(label: blogValueLabel, below: blogLabel)
-        //email
-        adjustAdditionalInfoLabelConstraints(label: emailLabel, below: blogValueLabel)
-        adjustAdditionalInfoLabelConstraints(label: emailValueLabel, below: emailLabel)
-        //bio
-        adjustAdditionalInfoLabelConstraints(label: bioLabel, below: emailValueLabel)
-        adjustAdditionalInfoLabelConstraints(label: bioValueLabel, below: bioLabel)
+    func adjustAdditionalInfoViewConstraints() {
+        additionalInfoView?.translatesAutoresizingMaskIntoConstraints = false
+        additionalInfoView?.stickLeftRightToSuperview(left: kDefaultPadding, right: kDefaultPadding)
+        additionalInfoView?.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: kDefaultPadding).isActive = true
+        additionalInfoView?.bottomAnchor.constraint(greaterThanOrEqualTo: detailsView.bottomAnchor, constant: -kDefaultPadding).isActive = true
     }
     
     func adjustIndicatorConstraints() {
@@ -275,53 +210,17 @@ class DeveloperViewController: BaseViewController {
         locationLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 0.0).isActive = true
         stickViewLeftRightToSuperview(view: nameLabel)
         stickViewLeftRightToSuperview(view: locationLabel)
-        locationLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 0.0).isActive = true
         locationLabel.bottomAnchor.constraint(equalTo: nameLocationStack.bottomAnchor, constant: 0.0).isActive = true
-        
     }
     
     func adjustImageViewConstraints() {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        imageView.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: 2 * kDefaultPadding).isActive = true
+        imageView.topAnchor.constraint(equalTo: nameLocationStack.bottomAnchor, constant: 2 * kDefaultPadding).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: 200.0).isActive = true
-        imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: 1).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: 200.0).isActive = true
     }
-    
-    func adjustInfoLabelConstraints() {
-        infoLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20.0).isActive = true
-        
-    }
-    
-    func adjustAdditionalInfoLabelConstraints(label: UILabel, below topView: UIView) {
-        label.translatesAutoresizingMaskIntoConstraints = false
-        stickViewLeftRightToSuperview(view: label)
-        label.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: kDefaultPadding).isActive = true
-    }
-    
-    func adjustAdditionalInfoFirstLastConstraints() {
-        hireableLabel.topAnchor.constraint(equalTo: additionalInfoStack.topAnchor, constant: 0).isActive = true
-        bioValueLabel.topAnchor.constraint(equalTo: additionalInfoStack.bottomAnchor, constant: 0).isActive = true
-    }
-    
-    func configureViewConditionals() {
-        let company: Bool = (developer?.company?.count ?? 0) > 0
-        let blog: Bool = (developer?.blog?.count ?? 0) > 0
-        let email: Bool = (developer?.email?.count ?? 0) > 0
-        let bio: Bool = (developer?.bio?.count ?? 0) > 0
-        
-        companyLabel.isHidden = !company
-        companyValueLabel.isHidden = !company
-        
-        blogLabel.isHidden = !blog
-        blogValueLabel.isHidden = !blog
-        
-        emailLabel.isHidden = !email
-        emailValueLabel.isHidden = !email
-        
-        bioLabel.isHidden = !bio
-        bioValueLabel.isHidden = !bio
-    }
+
     
     func updateUI(_ dev: Developer?) {
         guard let dev = dev else {
@@ -329,17 +228,12 @@ class DeveloperViewController: BaseViewController {
         }
         
         hideLoading()
+        additionalInfoView?.developer = developer
         detailsView.isHidden = false
         
         //connect the model values to the UI elements
         nameLabel.text = dev.name
         locationLabel.text = dev.location
-        companyLabel.attributedText = createTextWith(prefixText: "Company", valueText: dev.company ?? "")
-        blogLabel.attributedText = createTextWith(prefixText: "Blog", valueText: dev.blog ?? "")
-        emailLabel.attributedText = createTextWith(prefixText: "Email", valueText: dev.email ?? "")
-        bioLabel.attributedText = createTextWith(prefixText: "Bio", valueText: dev.bio ?? "")
-        hireableLabel.text = dev.hireable == true ? "hireable" : "not hireable"
-        hireableLabel.textColor = dev.hireable == true ? .green : .red
     }
     
     func showErrorAlert(error: String?) {
@@ -384,6 +278,6 @@ class DeveloperViewController: BaseViewController {
         }
         
         view.leftAnchor.constraint(equalTo: superview.leftAnchor, constant: left).isActive = true
-        view.rightAnchor.constraint(equalTo: superview.rightAnchor, constant: right).isActive = true
+        view.rightAnchor.constraint(equalTo: superview.rightAnchor, constant: -right).isActive = true
     }
 }
