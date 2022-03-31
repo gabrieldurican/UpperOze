@@ -3,6 +3,10 @@ import UIKit
 import RealmSwift
 
 class DeveloperViewController: BaseViewController {
+    let kCircleRadius = 15.0
+    let kDefaultFontSize = 14.0
+    let kDefaultPadding = 15.0
+    
     var developer: Developer?
     var devLogin: String?
     var imageUrl: String?
@@ -10,11 +14,9 @@ class DeveloperViewController: BaseViewController {
     var imageView = UIImageView()
     var nameLabel = UILabel()
     var locationLabel = UILabel()
-    var companyLabel = UILabel()
-    var blogLabel = UILabel()
-    var emailLabel = UILabel()
-    var bioLabel = UILabel()
-    var hireableLabel = UILabel()
+    var nameLocationStack = UIStackView()
+    var additionalInfoView: AdditionalDeveloperInfoView?
+    
     
     lazy var indicatorView: UIActivityIndicatorView = {
         let iv = UIActivityIndicatorView(style: .large)
@@ -46,6 +48,7 @@ class DeveloperViewController: BaseViewController {
     
     func startObservingRealm() {
         developer = realm?.object(ofType: Developer.self, forPrimaryKey: devLogin)
+
         notificationToken = developer?.observe { [weak self] change in
             guard let self = self else {
                 return
@@ -57,7 +60,7 @@ class DeveloperViewController: BaseViewController {
             case .error(let error):
                 self.showErrorAlert(error: error.localizedDescription)
             case .deleted:
-                self.showErrorAlert(error: "object deleted")
+                self.showErrorAlert(error: " object deleted")
             }
         }
     }
@@ -66,7 +69,6 @@ class DeveloperViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        adjustImageViewConstraints()
         prepareData()
         loadImage()
         getDeveloperInfo()
@@ -131,32 +133,25 @@ class DeveloperViewController: BaseViewController {
     func addNeededSubviews() {
         view.addSubview(detailsView)
         detailsView.fixInView(self.view)
+        //directly inside details view
+        detailsView.addSubview(nameLocationStack)
         detailsView.addSubview(imageView)
-        detailsView.addSubview(companyLabel)
-        detailsView.addSubview(nameLabel)
-        detailsView.addSubview(locationLabel)
-        detailsView.addSubview(blogLabel)
-        detailsView.addSubview(emailLabel)
-        detailsView.addSubview(bioLabel)
-        detailsView.addSubview(hireableLabel)
+        additionalInfoView = AdditionalDeveloperInfoView(developer: self.developer)
+        detailsView.addSubview(additionalInfoView ?? UIView())
+        
+        //name and location stackView
+        nameLocationStack.addSubview(nameLabel)
+        nameLocationStack.addSubview(locationLabel)
+
+        //loading indicator
         view.addSubview(indicatorView)
     }
     
-    func configureConstraints() {
-        adjustNameLabelConstraints()
-        adjustLabelConstraints(label: locationLabel, below: nameLabel)
-        adjustLabelConstraints(label: companyLabel, below: imageView)
-        adjustLabelConstraints(label: blogLabel, below: companyLabel)
-        adjustLabelConstraints(label: emailLabel, below: blogLabel)
-        adjustLabelConstraints(label: bioLabel, below: emailLabel)
-        adjustLabelConstraints(label: hireableLabel, below: bioLabel)
-        NSLayoutConstraint.activate([
-            indicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            indicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
-    }
-    
     func configureViewsProperties() {
+        nameLocationStack.axis = .vertical
+        nameLocationStack.alignment = .center
+        nameLocationStack.spacing = 0.0
+        
         nameLabel.font = UIFont.boldSystemFont(ofSize: 20)
         nameLabel.textAlignment = .center
         nameLabel.textColor = .black
@@ -164,32 +159,8 @@ class DeveloperViewController: BaseViewController {
         locationLabel.textColor = .orange
         locationLabel.textAlignment = .center
         locationLabel.adjustsFontSizeToFitWidth = true
-        companyLabel.font = UIFont.systemFont(ofSize: 14)
-        blogLabel.font = UIFont.systemFont(ofSize: 14)
-        emailLabel.font = UIFont.systemFont(ofSize: 14)
-        bioLabel.font = UIFont.systemFont(ofSize: 14)
-        hireableLabel.font = UIFont.systemFont(ofSize: 14)
-        companyLabel.textColor = .black
     }
     
-    func updateUI(_ dev: Developer?) {
-        guard let dev = dev else {
-            return
-        }
-        
-        hideLoading()
-        detailsView.isHidden = false
-        
-        //connect the model values to the UI elements
-        nameLabel.text = dev.name
-        locationLabel.text = dev.location
-        companyLabel.attributedText = createTextWith(prefixText: "Company", valueText: dev.company ?? "")
-        blogLabel.attributedText = createTextWith(prefixText: "Blog", valueText: dev.blog ?? "")
-        emailLabel.attributedText = createTextWith(prefixText: "Email", valueText: dev.email ?? "")
-        bioLabel.attributedText = createTextWith(prefixText: "Bio", valueText: dev.bio ?? "")
-        hireableLabel.text = dev.hireable == true ? "hireable" : "not hireable"
-        hireableLabel.textColor = dev.hireable == true ? .green : .red
-    }
     
     func configureImageView() {
         imageView.layer.cornerRadius = 100.0
@@ -201,26 +172,68 @@ class DeveloperViewController: BaseViewController {
         imageView.layer.borderWidth = 2.0
     }
 
+    func configureConstraints() {
+        //name and location stack view
+        adjustNameLocationConstraints()
+        
+        //image view
+        adjustImageViewConstraints()
+        
+        adjustAdditionalInfoViewConstraints()
+
+        //center the loading indicator
+        adjustIndicatorConstraints()
+    }
+    
+    func adjustAdditionalInfoViewConstraints() {
+        additionalInfoView?.translatesAutoresizingMaskIntoConstraints = false
+        additionalInfoView?.stickLeftRightToSuperview(left: kDefaultPadding, right: kDefaultPadding)
+        additionalInfoView?.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: kDefaultPadding).isActive = true
+        additionalInfoView?.bottomAnchor.constraint(greaterThanOrEqualTo: detailsView.bottomAnchor, constant: -kDefaultPadding).isActive = true
+    }
+    
+    func adjustIndicatorConstraints() {
+        NSLayoutConstraint.activate([
+            indicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            indicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+    
+    func adjustNameLocationConstraints() {
+        nameLocationStack.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        locationLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        nameLocationStack.centerXAnchor.constraint(equalTo: detailsView.centerXAnchor).isActive = true
+        nameLocationStack.topAnchor.constraint(equalTo: detailsView.topAnchor, constant: 2 * kDefaultPadding).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: nameLocationStack.topAnchor, constant: kDefaultPadding).isActive = true
+        locationLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 0.0).isActive = true
+        stickViewLeftRightToSuperview(view: nameLabel)
+        stickViewLeftRightToSuperview(view: locationLabel)
+        locationLabel.bottomAnchor.constraint(equalTo: nameLocationStack.bottomAnchor, constant: 0.0).isActive = true
+    }
+    
     func adjustImageViewConstraints() {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        imageView.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: 50).isActive = true
+        imageView.topAnchor.constraint(equalTo: nameLocationStack.bottomAnchor, constant: 2 * kDefaultPadding).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: 200.0).isActive = true
-        imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: 1).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: 200.0).isActive = true
     }
+
     
-    func adjustNameLabelConstraints() {
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 15.0).isActive = true
-        nameLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -15.0).isActive = true
-        nameLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 30).isActive = true
-    }
-    
-    func adjustLabelConstraints(label: UILabel, below topView: UIView) {
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 15.0).isActive = true
-        label.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -15.0).isActive = true
-        label.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: 15).isActive = true
+    func updateUI(_ dev: Developer?) {
+        guard let dev = dev else {
+            return
+        }
+        
+        hideLoading()
+        additionalInfoView?.developer = developer
+        detailsView.isHidden = false
+        
+        //connect the model values to the UI elements
+        nameLabel.text = dev.name
+        locationLabel.text = dev.location
     }
     
     func showErrorAlert(error: String?) {
@@ -256,5 +269,15 @@ class DeveloperViewController: BaseViewController {
         mutableAttributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.orange, range: range)
         
         return mutableAttributedString
+    }
+    
+    //helpers
+    func stickViewLeftRightToSuperview(view: UIView, left: CGFloat = 0, right: CGFloat = 0) {
+        guard let superview = view.superview else {
+            return
+        }
+        
+        view.leftAnchor.constraint(equalTo: superview.leftAnchor, constant: left).isActive = true
+        view.rightAnchor.constraint(equalTo: superview.rightAnchor, constant: -right).isActive = true
     }
 }

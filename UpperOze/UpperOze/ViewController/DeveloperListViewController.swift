@@ -81,9 +81,7 @@ class DeveloperListViewController: BaseViewController {
     }
 
     @objc func goToFavorites() {
-        let fav = FavoritesViewController()
-
-        self.navigationController?.pushViewController(fav, animated: true)
+        coordinator?.showFavorites()
     }
 }
 
@@ -121,8 +119,7 @@ extension DeveloperListViewController: UITableViewDataSource, UITableViewDelegat
             return
         }
         
-        let vc = DeveloperViewController(devLogin: dev.login ?? "", imageUrl: dev.avatarUrl ?? "")
-        self.navigationController?.pushViewController(vc, animated: true)
+        coordinator?.showDeveloperDetails(devLogin: dev.login, imageUrl: dev.avatarUrl)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
