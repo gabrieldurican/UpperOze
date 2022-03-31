@@ -14,9 +14,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let window = UIWindow(windowScene: windowScene)
         
-//        let dev = DeveloperListViewController(userRealmConfiguration: Realm.Configuration.defaultConfiguration)
-//        let dev = DeveloperListViewController()
-//        let nav = UINavigationController(rootViewController: dev)
         let nav = UINavigationController()
         coordinator = MainCoordinator(navigationController: nav)
         coordinator?.start()
